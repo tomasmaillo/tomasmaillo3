@@ -14,6 +14,8 @@ import {
   useProgress,
 } from "@react-three/drei";
 
+import Lora from "./Lora";
+
 function Card(props) {
   const ref = useRef();
 
@@ -80,7 +82,7 @@ function Link({ materialProps }) {
       onClick={(event) => window.open("https://tomasmaillo.com", "_blank")}
       ref={ref}
     >
-      <Circle args={[0.3, 30]} position={[0, -2, 0]}>
+      <Circle args={[0.25, 25]} position={[0, -1.9, 0]}>
         <meshPhysicalMaterial {...materialProps} />
       </Circle>
     </mesh>
@@ -108,17 +110,17 @@ function OnCard() {
 
 function Intro({ ready, setReady }) {
   const { active, progress, errors, item, loaded, total } = useProgress();
-  useEffect(() => setTimeout(() => setReady(true), 500), []);
+  useEffect(() => setTimeout(() => setReady(true), 1000), []);
   useEffect(() => setReady(true), [progress]);
 
   const [vec] = useState(() => new THREE.Vector3());
   return useFrame((state) => {
     if (ready) {
       state.camera.position.lerp(
-        vec.set(state.mouse.x * 3, state.mouse.y * 2 - 0.5, 4),
+        vec.set(state.mouse.x * 3, state.mouse.y * 2 - 0.5, 3),
         0.05
       );
-      state.camera.lookAt(0, 0, -0.25);
+      state.camera.lookAt(0, -0.25, 0);
     }
   });
 }
@@ -130,23 +132,31 @@ function App() {
     <>
       <Canvas
         dpr={[1, 2]}
-        camera={{ position: [0, -2, 20] }}
+        camera={{ position: [0, 0, 20] }}
         gl={{ alpha: false }}
       >
+        <group rotation={[0, 0, Math.PI / 4]}>
+          <mesh position={[0, 0, -10]} material-color="hotpink">
+            <planeGeometry args={[20, 2]} />
+          </mesh>
+          <mesh position={[0, 0, -10]} material-color="hotpink">
+            <planeGeometry args={[2, 20]} />
+          </mesh>
+        </group>
+        <ambientLight />
         <color attach="background" args={["#151518"]} />
         <Suspense fallback={null}>
           <Card />
-          <group rotation={[0, 0, Math.PI / 4]}>
-            <mesh position={[0, 0, -10]} material-color="hotpink">
-              <planeGeometry args={[20, 2]} />
-            </mesh>
-            <mesh position={[0, 0, -10]} material-color="hotpink">
-              <planeGeometry args={[2, 20]} />
-            </mesh>
-          </group>
+
+          <Lora
+            scale={15}
+            position={[0, -10, -8]}
+            rotation={[0, -Math.PI / 2, 0]}
+          />
           <Intro ready={ready} setReady={setReady} />
         </Suspense>
       </Canvas>
+      <Loader />
     </>
   );
 }
