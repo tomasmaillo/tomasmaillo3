@@ -1,6 +1,6 @@
 import "./App.css";
 import * as THREE from "three";
-import React, { Suspense, useRef, useState, useEffect } from "react";
+import React, { Suspense, useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
   useGLTF,
@@ -15,6 +15,8 @@ import {
 } from "@react-three/drei";
 
 import Lora from "./Lora";
+
+import githubPoints from "./icons/github";
 
 function Card(props) {
   const ref = useRef();
@@ -36,11 +38,11 @@ function Card(props) {
     roughness: 0,
     clearcoat: 3,
     clearcoatRoughness: 0,
-    transmission: 1,
+    transmission: 0.9,
     ior: 1.5,
     envMapIntensity: 0,
-    color: "#ffffff",
-    attenuationTint: "#ffe79e",
+    color: "#eeeeee",
+    attenuationTint: "#ffffff",
     attenuationDistance: 0,
     normalMap: normalMapTexture,
     normalScale: 0.5,
@@ -51,16 +53,16 @@ function Card(props) {
         <OnCard />
       </group>
 
-      <RoundedBox radius={0.05} args={[2, 3, 0.1]}>
+      <RoundedBox radius={0.05} args={[2, 0.5, 0.1]}>
         <meshPhysicalMaterial {...materialProps} />
       </RoundedBox>
 
-      <Link materialProps={materialProps} />
+      <Link materialProps={materialProps} color={"#ff7777"} />
     </mesh>
   );
 }
 
-function Link({ materialProps }) {
+function Link({ materialProps, color }) {
   const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
@@ -69,6 +71,8 @@ function Link({ materialProps }) {
 
   const ref = useRef();
 
+  materialProps.color = color;
+
   useFrame((state, delta) => {
     ref.current.rotation.x = Math.sin(state.clock.getElapsedTime()) * 0.055;
     ref.current.rotation.y = Math.sin(state.clock.getElapsedTime()) * 0.03;
@@ -76,17 +80,46 @@ function Link({ materialProps }) {
   });
 
   return (
-    <mesh
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
-      onClick={(event) => window.open("https://tomasmaillo.com", "_blank")}
-      ref={ref}
-    >
-      <Circle args={[0.25, 25]} position={[0, -1.9, 0]}>
-        <meshPhysicalMaterial {...materialProps} />
-      </Circle>
-    </mesh>
+    <>
+      <mesh
+        onPointerOver={() => setHovered(true)}
+        onPointerOut={() => setHovered(false)}
+        onClick={(event) => window.open("https://tomasmaillo.com", "_blank")}
+        ref={ref}
+      >
+        <Circle args={[0.25, 25]} position={[0, -0.7, 0]}>
+          <meshPhysicalMaterial {...materialProps} />
+        </Circle>
+      </mesh>
+    </>
   );
+}
+
+function Icon({ shape, rotation, position, color, opacity, index }) {
+  const vertices = useMemo(
+    () => githubPoints.map((point) => new THREE.Vector3(...point).divide(10)),
+    [githubPoints]
+  );
+  return (
+    <group position={[0, 0, 1]}>
+      <mesh>
+        <shapeGeometry vertices={vertices} />
+        <lineBasicMaterial color="blue" />
+      </mesh>
+    </group>
+  );
+  /*return (
+    <mesh rotation={rotation} position={position.to((x, y, z) => [x, y, z])}>
+      <meshPhongMaterial
+        color={color}
+        opacity={opacity}
+        side={THREE.DoubleSide}
+        depthWrite={false}
+        transparent
+      />
+      <shapeGeometry args={[shape]} />
+    </mesh>
+  );*/
 }
 
 function OnCard() {
@@ -100,9 +133,9 @@ function OnCard() {
         letterSpacing={0.02}
         anchorX="center"
         anchorY="center"
-        position={[0, 0, 0]}
+        position={[0, 0.1, 0]}
       >
-        heyyy
+        @tomasmaillo
       </Text>
     </>
   );
@@ -110,15 +143,16 @@ function OnCard() {
 
 function Intro({ ready, setReady }) {
   const { active, progress, errors, item, loaded, total } = useProgress();
-  useEffect(() => setTimeout(() => setReady(true), 1000), []);
-  useEffect(() => setReady(true), [progress]);
+  useEffect(() => {
+    if (progress == 100) setReady(true);
+  }, [progress]);
 
   const [vec] = useState(() => new THREE.Vector3());
   return useFrame((state) => {
     if (ready) {
       state.camera.position.lerp(
-        vec.set(state.mouse.x * 3, state.mouse.y * 2 - 0.5, 3),
-        0.05
+        vec.set(state.mouse.x * 2, state.mouse.y - 0.5, 3),
+        0.02
       );
       state.camera.lookAt(0, -0.25, 0);
     }
@@ -132,7 +166,7 @@ function App() {
     <>
       <Canvas
         dpr={[1, 2]}
-        camera={{ position: [0, 0, 20] }}
+        camera={{ position: [Math.random() * 10 - 5, 10, 20] }}
         gl={{ alpha: false }}
       >
         <group rotation={[0, 0, Math.PI / 4]}>
@@ -143,20 +177,15 @@ function App() {
             <planeGeometry args={[2, 20]} />
           </mesh>
         </group>
-        <ambientLight />
         <color attach="background" args={["#151518"]} />
         <Suspense fallback={null}>
           <Card />
 
-          <Lora
-            scale={15}
-            position={[0, -10, -8]}
-            rotation={[0, -Math.PI / 2, 0]}
-          />
+          <Lora ready={ready} scale={15} rotation={[0, -Math.PI / 2, 0]} />
           <Intro ready={ready} setReady={setReady} />
         </Suspense>
       </Canvas>
-      <Loader />
+      <Loader dataInterpolation={(p) => `${p.toFixed(2)}%`} />
     </>
   );
 }
