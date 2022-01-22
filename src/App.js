@@ -103,15 +103,15 @@ function App() {
         gl={{ alpha: false }}
       >
         <group rotation={[0, 0, Math.PI / 4]}>
-          <mesh position={[0, 0, -10]} material-color="hotpink">
+          <mesh position={[0, 0, -9]} material-color="hotpink">
             <planeGeometry args={[100, 2]} />
           </mesh>
-          <mesh position={[0, 5, -10]} material-color="hotpink">
+          <mesh position={[0, 5, -9]} material-color="hotpink">
             <planeGeometry args={[100, 2]} />
           </mesh>
         </group>
         <color attach="background" args={["#151518"]} />
-        <fog attach="fog" args={["black", 6, 20]} />
+        <fog attach="fog" args={["#151518", 8, 20]} />
         <Suspense fallback={null}>
           <Card />
           <Lora ready={ready} scale={15} rotation={[0, -Math.PI / 2, 0]} />
