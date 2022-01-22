@@ -1,31 +1,45 @@
 import "./App.css";
 import React, { useRef, useState, useEffect } from "react";
 import { Text, Circle } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import * as THREE from "three";
 
-function Link({ materialProps, color, link, position }) {
+function Link({ materialProps, color, link, position, ready }) {
   const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     document.body.style.cursor = hovered ? "pointer" : "auto";
   }, [hovered]);
 
-  const ref = useRef();
-
   materialProps.color = color;
 
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current.position.set(0, 0, Math.random() * 10 + 20);
+  }, []);
+
+  useFrame(() => {
+    if (ready) {
+      ref.current.position.lerp(
+        /* there has to be a better way of deconstructing this */
+        new THREE.Vector3(position[0], position[1], position[2]),
+        0.05
+      );
+    }
+  });
+
   return (
-    <>
-      <mesh
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
-        onClick={() => window.open(link, "_blank")}
-        ref={ref}
-      >
-        <Circle args={[0.2, 25]} position={position}>
-          <meshPhysicalMaterial {...materialProps} />
-        </Circle>
-      </mesh>
-    </>
+    <mesh
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
+      onClick={() => window.open(link, "_blank")}
+      ref={ref}
+    >
+      <Circle args={[0.2, 25]}>
+        <meshPhysicalMaterial {...materialProps} />
+      </Circle>
+    </mesh>
   );
 }
 
@@ -74,7 +88,7 @@ function Job() {
   );
 }
 
-function OnCard({ cardSize, materialProps }) {
+function OnCard({ cardSize, materialProps, ready }) {
   const namePos = [-cardSize[0] / 2 + 0.07, cardSize[1] / 2, 0];
   return (
     <>
@@ -83,18 +97,21 @@ function OnCard({ cardSize, materialProps }) {
         color={"#ffbbbb"}
         link={"https://tomasmaillo.com/"}
         position={[0.3, -0.7, 0]}
+        ready={ready}
       />
       <Link
         materialProps={materialProps}
         color={"#bbbbff"}
         link={"http://twitter.com/"}
         position={[0.8, -0.7, 0]}
+        ready={ready}
       />
       <Link
         materialProps={materialProps}
         color={"#bbffbb"}
         link={"http://twitter.com/"}
         position={[1.3, -0.7, 0]}
+        ready={ready}
       />
 
       <group position={namePos}>

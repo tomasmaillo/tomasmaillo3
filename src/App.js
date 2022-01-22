@@ -1,24 +1,14 @@
 import "./App.css";
 import * as THREE from "three";
-import React, { Suspense, useRef, useMemo, useState, useEffect } from "react";
+import React, { Suspense, useRef, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import {
-  useGLTF,
-  Loader,
-  OrbitControls,
-  RoundedBox,
-  Stats,
-  Text,
-  Html,
-  Circle,
-  useProgress,
-} from "@react-three/drei";
+import { Loader, RoundedBox, useProgress } from "@react-three/drei";
 
 import Lora from "./Lora";
 
 import OnCard from "./OnCard";
 
-function Card(props) {
+function Card({ ready }) {
   const cardSize = [2 * 1.56, 2, 0.1];
 
   const ref = useRef();
@@ -50,9 +40,13 @@ function Card(props) {
     normalScale: 0.5,
   };
   return (
-    <mesh {...props} ref={ref}>
+    <mesh ref={ref}>
       <group position={[0, 0, 0.051]}>
-        <OnCard cardSize={cardSize} materialProps={materialProps} />
+        <OnCard
+          cardSize={cardSize}
+          materialProps={materialProps}
+          ready={ready}
+        />
       </group>
 
       <RoundedBox radius={0.05} args={cardSize}>
@@ -63,17 +57,16 @@ function Card(props) {
 }
 
 function Intro({ ready, setReady }) {
-  const { viewport, size } = useThree();
+  const { size } = useThree();
   const [zDist, setZDist] = useState(3);
 
-  useFrame(() => {
-    console.log(size);
+  useEffect(() => {
     if (size.width < 500) {
       setZDist(5);
     } else {
       setZDist(3);
     }
-  });
+  }, [size.width]);
 
   const { active, progress, errors, item, loaded, total } = useProgress();
   useEffect(() => {
@@ -101,6 +94,7 @@ function App() {
         dpr={[1, 2]}
         camera={{ position: [Math.random() * 10 - 5, 10, 20] }}
         gl={{ alpha: false }}
+        ready={ready}
       >
         <group rotation={[0, 0, Math.PI / 4]}>
           <mesh position={[0, 0, -9]} material-color="hotpink">
@@ -111,9 +105,9 @@ function App() {
           </mesh>
         </group>
         <color attach="background" args={["#151518"]} />
-        <fog attach="fog" args={["#151518", 8, 20]} />
+        <fog attach="fog" args={["rgb(250,0,0)", 8, 20]} />
         <Suspense fallback={null}>
-          <Card />
+          <Card ready={ready} />
           <Lora ready={ready} scale={15} rotation={[0, -Math.PI / 2, 0]} />
           <Intro ready={ready} setReady={setReady} />
         </Suspense>

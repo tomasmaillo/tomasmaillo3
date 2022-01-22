@@ -20,6 +20,8 @@ export default function Model({ ready, ...props }) {
   useFrame(() => {
     if (ready) {
       group.current.position.lerp(new THREE.Vector3(0, -6, -8), 0.02);
+      // Cant lerp rotation as its Euler and not Vector smh
+      //group.current.rotation.lerp(new THREE.Vector3(0, Math.PI / 2, -8), 0.02);
     }
   });
   return (
