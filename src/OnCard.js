@@ -1,8 +1,9 @@
-import "./App.css";
 import React, { useRef, useState, useEffect } from "react";
 import { Text, Circle } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+
+import Oscillator from "./Oscillator";
 
 function Link({ materialProps, color, link, position, ready }) {
   const [hovered, setHovered] = useState(false);
@@ -24,7 +25,7 @@ function Link({ materialProps, color, link, position, ready }) {
       ref.current.position.lerp(
         /* there has to be a better way of deconstructing this */
         new THREE.Vector3(position[0], position[1], position[2]),
-        0.05
+        0.03
       );
     }
   });
@@ -36,9 +37,11 @@ function Link({ materialProps, color, link, position, ready }) {
       onClick={() => window.open(link, "_blank")}
       ref={ref}
     >
-      <Circle args={[0.2, 25]}>
-        <meshPhysicalMaterial {...materialProps} />
-      </Circle>
+      <Oscillator speed={0.1} amplitude={[0.05, 0.05, 0.05]}>
+        <Circle args={[0.2, 25]}>
+          <meshPhysicalMaterial {...materialProps} />
+        </Circle>
+      </Oscillator>
     </mesh>
   );
 }
@@ -92,27 +95,29 @@ function OnCard({ cardSize, materialProps, ready }) {
   const namePos = [-cardSize[0] / 2 + 0.07, cardSize[1] / 2, 0];
   return (
     <>
-      <Link
-        materialProps={materialProps}
-        color={"#ffbbbb"}
-        link={"https://tomasmaillo.com/"}
-        position={[0.3, -0.7, 0]}
-        ready={ready}
-      />
-      <Link
-        materialProps={materialProps}
-        color={"#bbbbff"}
-        link={"http://twitter.com/"}
-        position={[0.8, -0.7, 0]}
-        ready={ready}
-      />
-      <Link
-        materialProps={materialProps}
-        color={"#bbffbb"}
-        link={"http://twitter.com/"}
-        position={[1.3, -0.7, 0]}
-        ready={ready}
-      />
+      <group position={[-0.1, -0.7, 0.05]}>
+        <Link
+          materialProps={materialProps}
+          color={"#ffbbbb"}
+          link={"https://tomasmaillo.com/"}
+          position={[0.3, 0, 0]}
+          ready={ready}
+        />
+        <Link
+          materialProps={materialProps}
+          color={"#bbbbff"}
+          link={"http://twitter.com/"}
+          position={[0.8, 0, 0]}
+          ready={ready}
+        />
+        <Link
+          materialProps={materialProps}
+          color={"#bbffbb"}
+          link={"http://twitter.com/"}
+          position={[1.3, 0, 0]}
+          ready={ready}
+        />
+      </group>
 
       <group position={namePos}>
         <Name />

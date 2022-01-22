@@ -1,4 +1,3 @@
-import "./App.css";
 import * as THREE from "three";
 import React, { Suspense, useRef, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
@@ -7,6 +6,7 @@ import { Loader, RoundedBox, useProgress } from "@react-three/drei";
 import Lora from "./Lora";
 
 import OnCard from "./OnCard";
+import Oscillator from "./Oscillator";
 
 function Card({ ready }) {
   const cardSize = [2 * 1.56, 2, 0.1];
@@ -107,7 +107,9 @@ function App() {
         <color attach="background" args={["#151518"]} />
         <fog attach="fog" args={["rgb(250,0,0)", 8, 20]} />
         <Suspense fallback={null}>
-          <Card ready={ready} />
+          <Oscillator speed={0.1} amplitude={[0.06, 0.04, 0.04]}>
+            <Card ready={ready} />
+          </Oscillator>
           <Lora ready={ready} scale={15} rotation={[0, -Math.PI / 2, 0]} />
           <Intro ready={ready} setReady={setReady} />
         </Suspense>
