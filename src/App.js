@@ -1,7 +1,13 @@
 import * as THREE from "three";
 import React, { Suspense, useRef, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Loader, RoundedBox, useProgress } from "@react-three/drei";
+import {
+  Loader,
+  RoundedBox,
+  useProgress,
+  OrbitControls,
+  Stats,
+} from "@react-three/drei";
 
 import Lora from "./Lora";
 
@@ -74,15 +80,16 @@ function Intro({ ready, setReady }) {
   }, [progress]);
 
   const [vec] = useState(() => new THREE.Vector3());
-  return useFrame((state) => {
+  useFrame((state) => {
     if (ready) {
       state.camera.position.lerp(
-        vec.set(state.mouse.x * 2, state.mouse.y - 0.5, zDist),
-        0.015
+        vec.set(state.mouse.x * 0.25, state.mouse.y * 0.25 - 0.4, zDist),
+        0.025
       );
       state.camera.lookAt(0, -0.25, 0);
     }
   });
+  return <OrbitControls enableDamping panSpeed={0.01} enableZoom={false} />;
 }
 
 function App() {
@@ -104,6 +111,7 @@ function App() {
             <planeGeometry args={[100, 2]} />
           </mesh>
         </group>
+
         <color attach="background" args={["#151518"]} />
         <fog attach="fog" args={["rgb(250,0,0)", 8, 20]} />
         <Suspense fallback={null}>
@@ -112,6 +120,7 @@ function App() {
           </Oscillator>
           <Lora ready={ready} scale={15} rotation={[0, -Math.PI / 2, 0]} />
           <Intro ready={ready} setReady={setReady} />
+          <Stats showPanel={0} className="stats" />
         </Suspense>
       </Canvas>
       <Loader dataInterpolation={(p) => `${p.toFixed(2)}%`} />
