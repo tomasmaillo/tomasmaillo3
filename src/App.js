@@ -17,14 +17,6 @@ import Oscillator from "./Oscillator";
 function Card({ ready }) {
   const cardSize = [2 * 1.56, 2, 0.1];
 
-  const ref = useRef();
-
-  useFrame((state, delta) => {
-    ref.current.rotation.x = Math.sin(state.clock.getElapsedTime()) * 0.035;
-    ref.current.rotation.y = Math.sin(state.clock.getElapsedTime()) * 0.07;
-    ref.current.rotation.z = Math.sin(state.clock.getElapsedTime()) * 0.01;
-  });
-
   const textureLoader = new THREE.TextureLoader();
   const normalMapTexture = textureLoader.load("/normal.jpg");
   normalMapTexture.wrapS = THREE.RepeatWrapping;
@@ -46,7 +38,7 @@ function Card({ ready }) {
     normalScale: 0.5,
   };
   return (
-    <mesh ref={ref}>
+    <mesh>
       <group position={[0, 0, 0.051]}>
         <OnCard
           cardSize={cardSize}
@@ -125,7 +117,7 @@ function App() {
         <color attach="background" args={["#151518"]} />
         <fog attach="fog" args={["rgb(250,0,0)", 8, 20]} />
         <Suspense fallback={null}>
-          <Oscillator speed={0.1} amplitude={[0.06, 0.04, 0.04]}>
+          <Oscillator speed={0.2} amplitude={[0.05, 0.04, 0.02]}>
             <Card ready={ready} />
           </Oscillator>
           <Lora ready={ready} scale={15} rotation={[0, -Math.PI / 2, 0]} />
