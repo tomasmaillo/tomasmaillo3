@@ -63,6 +63,11 @@ function Card({ ready }) {
 }
 
 function Intro({ ready, setReady }) {
+  const { active, progress, errors, item, loaded, total } = useProgress();
+  useEffect(() => {
+    if (progress == 100) setReady(true);
+  }, [progress]);
+
   const { size } = useThree();
   const [zDist, setZDist] = useState(3);
 
@@ -74,17 +79,22 @@ function Intro({ ready, setReady }) {
     }
   }, [size.width]);
 
-  const { active, progress, errors, item, loaded, total } = useProgress();
-  useEffect(() => {
-    if (progress == 100) setReady(true);
-  }, [progress]);
+  const [lerpSpeed, setLerpSpeed] = useState(0.025);
 
   const [vec] = useState(() => new THREE.Vector3());
   useFrame((state) => {
     if (ready) {
+      if (state.camera.position.z < zDist - 1) {
+        setLerpSpeed(0.035);
+      } else {
+        setLerpSpeed(0.025);
+      }
+
+      console.log(`${state.camera.position.z} ${zDist} ${lerpSpeed}`);
+
       state.camera.position.lerp(
         vec.set(state.mouse.x * 0.25, state.mouse.y * 0.25 - 0.4, zDist),
-        0.025
+        lerpSpeed
       );
       state.camera.lookAt(0, -0.25, 0);
     }
@@ -99,16 +109,16 @@ function App() {
     <>
       <Canvas
         dpr={[1, 2]}
-        camera={{ position: [Math.random() * 10 - 5, 10, 20] }}
+        camera={{ position: [Math.random() * 5 - 0.25, 10, 20] }}
         gl={{ alpha: false }}
         ready={ready}
       >
         <group rotation={[0, 0, Math.PI / 4]}>
           <mesh position={[0, 0, -9]} material-color="hotpink">
-            <planeGeometry args={[100, 2]} />
+            <planeGeometry args={[1000, 2]} />
           </mesh>
           <mesh position={[0, 5, -9]} material-color="hotpink">
-            <planeGeometry args={[100, 2]} />
+            <planeGeometry args={[1000, 2]} />
           </mesh>
         </group>
 
