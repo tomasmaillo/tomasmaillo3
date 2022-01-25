@@ -28,7 +28,7 @@ function Card({ ready }) {
     roughness: 0,
     clearcoat: 3,
     clearcoatRoughness: 0,
-    transmission: 0.9,
+    transmission: 0.8,
     ior: 1.5,
     envMapIntensity: 0,
     color: "#eeeeee",
@@ -82,8 +82,6 @@ function Intro({ ready, setReady }) {
         setLerpSpeed(0.025);
       }
 
-      console.log(`${state.camera.position.z} ${zDist} ${lerpSpeed}`);
-
       state.camera.position.lerp(
         vec.set(state.mouse.x * 0.25, state.mouse.y * 0.25 - 0.4, zDist),
         lerpSpeed
@@ -102,19 +100,17 @@ function App() {
       <Canvas
         dpr={[1, 2]}
         camera={{ position: [Math.random() * 5 - 0.25, 10, 20] }}
-        gl={{ alpha: false }}
         ready={ready}
       >
         <group rotation={[0, 0, Math.PI / 4]}>
-          <mesh position={[0, 0, -9]} material-color="hotpink">
-            <planeGeometry args={[1000, 2]} />
+          <mesh position={[0, 0, -9]} material-color="#55aacc">
+            <planeGeometry args={[1000, 0.5]} />
           </mesh>
-          <mesh position={[0, 5, -9]} material-color="hotpink">
-            <planeGeometry args={[1000, 2]} />
+          <mesh position={[0, 5, -9]} material-color="#55aacc">
+            <planeGeometry args={[1000, 0.5]} />
           </mesh>
         </group>
 
-        <color attach="background" args={["#151518"]} />
         <fog attach="fog" args={["rgb(250,0,0)", 8, 20]} />
         <Suspense fallback={null}>
           <Oscillator speed={0.2} amplitude={[0.05, 0.04, 0.02]}>
