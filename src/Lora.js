@@ -9,7 +9,7 @@ import { useFrame } from "@react-three/fiber";
 
 export default function Model({ ready, ...props }) {
   const group = useRef();
-  const { nodes, materials } = useGLTF("./lora.gltf");
+  const { nodes, materials } = useGLTF("./model.gltf");
   materials.wireframe = true;
 
   useEffect(() => {
@@ -26,11 +26,11 @@ export default function Model({ ready, ...props }) {
   });
   return (
     <group ref={group} {...props} dispose={null}>
-      <mesh geometry={nodes.mesh_0.geometry}>
+      <mesh geometry={nodes.Mesh_0.geometry}>
         <meshBasicMaterial attach="material" color="white" wireframe />
       </mesh>
     </group>
   );
 }
 
-useGLTF.preload("/lora.gltf");
+useGLTF.preload("/model.gltf");
