@@ -3,6 +3,8 @@ import { Text, Circle } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
+import Discord from "./Discord";
+
 import Oscillator from "./Oscillator";
 
 function Link({ materialProps, color, link, position, ready }) {
@@ -38,9 +40,9 @@ function Link({ materialProps, color, link, position, ready }) {
       ref={ref}
     >
       <Oscillator speed={0.1} amplitude={[0.05, 0.05, 0.05]}>
-        <Circle args={[0.2, 25]}>
+        <Discord>
           <meshPhysicalMaterial {...materialProps} />
-        </Circle>
+        </Discord>
       </Oscillator>
     </mesh>
   );
