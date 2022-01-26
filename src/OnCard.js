@@ -7,14 +7,14 @@ import Discord from "./Discord";
 
 import Oscillator from "./Oscillator";
 
-function Link({ materialProps, color, link, position, ready }) {
+function Link(props) {
+  const { link, position, ready } = props;
+
   const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     document.body.style.cursor = hovered ? "pointer" : "auto";
   }, [hovered]);
-
-  materialProps.color = color;
 
   const ref = useRef();
 
@@ -39,11 +39,7 @@ function Link({ materialProps, color, link, position, ready }) {
       onClick={() => window.open(link, "_blank")}
       ref={ref}
     >
-      <Oscillator speed={0.1} amplitude={[0.05, 0.05, 0.05]}>
-        <Discord>
-          <meshPhysicalMaterial {...materialProps} />
-        </Discord>
-      </Oscillator>
+      <Oscillator speed={0.1} amplitude={[0.05, 0.05, 0.05]} {...props} />
     </mesh>
   );
 }
@@ -93,28 +89,23 @@ function Job() {
   );
 }
 
-function OnCard({ cardSize, materialProps, ready }) {
+function OnCard({ cardSize, ready }) {
   const namePos = [-cardSize[0] / 2 + 0.07, cardSize[1] / 2, 0];
+
   return (
     <>
-      <group position={[-0.1, -0.7, 0.05]}>
+      <group position={[-0.1, -0.7, 0.07]}>
         <Link
-          materialProps={materialProps}
-          color={"#ffbbbb"}
           link={"https://tomasmaillo.com/"}
           position={[0.3, 0, 0]}
           ready={ready}
-        />
+        >
+          <Discord />
+        </Link>
+        <Link link={"http://twitter.com/"} position={[0.8, 0, 0]} ready={ready}>
+          <Discord />
+        </Link>
         <Link
-          materialProps={materialProps}
-          color={"#bbbbff"}
-          link={"http://twitter.com/"}
-          position={[0.8, 0, 0]}
-          ready={ready}
-        />
-        <Link
-          materialProps={materialProps}
-          color={"#bbffbb"}
           link={"http://twitter.com/"}
           position={[1.3, 0, 0]}
           ready={ready}

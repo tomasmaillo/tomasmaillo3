@@ -24,7 +24,7 @@ function Card({ ready }) {
   normalMapTexture.repeat.set(1, 1);
 
   const materialProps = {
-    thickness: 5,
+    thickness: 10,
     roughness: 0,
     clearcoat: 3,
     clearcoatRoughness: 0,
@@ -35,16 +35,12 @@ function Card({ ready }) {
     attenuationTint: "#ffffff",
     attenuationDistance: 0,
     normalMap: normalMapTexture,
-    normalScale: 0.5,
+    normalScale: 0.2,
   };
   return (
     <mesh>
       <group position={[0, 0, 0.051]}>
-        <OnCard
-          cardSize={cardSize}
-          materialProps={materialProps}
-          ready={ready}
-        />
+        <OnCard cardSize={cardSize} ready={ready} />
       </group>
 
       <RoundedBox radius={0.05} args={cardSize}>
