@@ -4,6 +4,9 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 import Discord from "./Discord";
+import Youtube from "./Youtube";
+import Github from "./Github";
+import Twitter from "./Twitter";
 
 import Oscillator from "./Oscillator";
 
@@ -94,22 +97,35 @@ function OnCard({ cardSize, ready }) {
 
   return (
     <>
-      <group position={[-0.1, -0.7, 0.07]}>
+      <group position={[0, -0.6, 0.07]}>
         <Link
-          link={"https://tomasmaillo.com/"}
-          position={[0.3, 0, 0]}
+          link={"https://twitter.com/tomascodes"}
+          position={[-0.5, 0, 0]}
+          ready={ready}
+        >
+          <Twitter />
+        </Link>
+        <Link
+          link={"https://github.com/Tomasroma64"}
+          position={[-0.18, 0, 0]}
+          ready={ready}
+        >
+          <Github />
+        </Link>
+        <Link
+          link={"https://discord.gg/KNHnWErrxu"}
+          position={[0.18, 0, 0]}
           ready={ready}
         >
           <Discord />
         </Link>
-        <Link link={"http://twitter.com/"} position={[0.8, 0, 0]} ready={ready}>
-          <Discord />
-        </Link>
         <Link
-          link={"http://twitter.com/"}
-          position={[1.3, 0, 0]}
+          link={"https://twitter.com/tomascodes"}
+          position={[0.5, 0, 0]}
           ready={ready}
-        />
+        >
+          <Youtube />
+        </Link>
       </group>
 
       <group position={namePos}>

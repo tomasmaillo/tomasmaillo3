@@ -1,0 +1,95 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.7.33",
+        "version" : "2.0"
+    },
+    "extensionsUsed" : [
+        "KHR_draco_mesh_compression"
+    ],
+    "extensionsRequired" : [
+        "KHR_draco_mesh_compression"
+    ],
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0,
+                1
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "name" : "Empty"
+        },
+        {
+            "mesh" : 0,
+            "name" : "Plane"
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Plane",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1
+                    },
+                    "extensions" : {
+                        "KHR_draco_mesh_compression" : {
+                            "bufferView" : 0,
+                            "attributes" : {
+                                "POSITION" : 0,
+                                "NORMAL" : 1
+                            }
+                        }
+                    },
+                    "indices" : 2,
+                    "mode" : 4
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "componentType" : 5126,
+            "count" : 233,
+            "max" : [
+                1.4138469696044922,
+                0.22048401832580566,
+                1.3456839323043823
+            ],
+            "min" : [
+                -1.6840646266937256,
+                0,
+                -1.178928017616272
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5126,
+            "count" : 233,
+            "type" : "VEC3"
+        },
+        {
+            "componentType" : 5123,
+            "count" : 432,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 1372,
+            "byteOffset" : 0
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 1372,
+            "uri" : "data:application/octet-stream;base64,RFJBQ08CAgEBAAAA6QGQAQGQAQ4ANt/3fd/3fd/3fd/3fd/3fd/3fd/3fd/3fd+yfdmz7/v2fd/3/dne5/v+9P+2fW+ytEm/b02fCv8CLkP/AudHAv8AAAAAAAEACQMAAAIBAQkDAAEDAQEBAA8DWQkbSIylAT0TgRN1DUGpJvlBjaHoFYO3QbVza2CovfifULkYb9ykiY68CXSxVq8awaZRQciuAzyHtcrlhjtxArFLKg1W/9yJqN8Cmy8KiG4IAAB2eeRILo1HANhSrDIAkGN1hyO9N3cAoHsxWwMAf112cySsaTcAvBp+cgCA6oVrjuTEtwaATcTfCwC4EVqII3XXLAQAvCtsJQCIPgCHI5nCfwMASiFsCgCAuKWjHMmQzFEAUEiQwwAArWmzcqQ3OCsAdANCRABg/R5Njkw30gQAdQPVBgCM4DVyJC8DGwFAl4GICACw3zbIkUZcgwBQxAj0AQDfRTNypDmaGQEAHYXGCgC8zgXNkZdr0ACAucC7cCR3wwsAbDdmCQDgkraGHMnXVEMA0GsAWgFAqeyJHEkr+UQAkJWwHAIAWL4kc+RGRzIAcDSsfQDAdkpjjpwGNQYAaoCdBADpd8U40qhZDACKGvoAABD+ImGOFMmOMACQZFihAYCU/+M5Mh9BHgD0Eb8iACDdCQaOtEUDAwDgomAYAQB42f850qv6HwC6Cj0RAGilm8qRHAVOBQCNAmoyAPDmfzpHBhmoA4CQATAAABJgMs2RcsiYBgA6BPkAACD+ggBH4u0HAMDdwpYGAIohI+XIuS5SAKBrQE4AAKr5yxzZJ8AMAH6CEREAqCWDnyNPQfgBABVA1AIAuMsccyS80DEAvAuqaY7EqRCJAABo1isAQCFYrQBAQ91CAQArFlMAYKSbFQC8wYkEAF40LhUA6MFILgBgrkzBAIC1AxcAnDgsAODhtwMA5a5/ACASggOAT84CAOPPWgAAnoXJACD8vmQAgDMCA2gyIQIA+YWZAgBgAgAAkEqDFABS1qQBAGphwQMAGDgQAgBjO7MAgFlKNwDo8d8HACR5XxoASPM6PgAgXqkKACjBCAgAolsYAQBTglYAUCoBAAC4gK4/AKBwiKcAQEE49QAAJfQIAEH6FwMAX4bHBwCsgRsvAOCw9T8AKD0q3UintEwB4C/NFABSNkgBIGUZTY5kJFU7ACxupAAw12MKAIBelAIAYmhhAgAVcfEBQEQBAABAKo2nAQB4kUwDgBzCWwDkEJUCgFOKjm8jYQM9PgBgDQQAAACV9j8AKP0Oz5GUGa4XALTg1gsADEcWAoBNcCcbSY7qAQCwonQMAO/SPQFACZGMAIAmFCYAUBE3OwBAMNoNAK9WPgGA2/8AALjb/xwAmBJYGQDQsfEIAFsaYADADdYCAAhVsgIANrZ6BAA7MrkFAIgNOAoAhPIrANBhbAUAgGsNAkARO5EAwItmQwDg8xoLADDwdwgAAscpBQCoFAAAgFMKgwEoPAsBwCZmJADARvQIAEH6sACgHjQAQCFTFQBQgjgVADxUAAAALiAAAAAA/z8AAG6P178AAAAAHeeWvy9ERkAOAAMBAAsD1TUTSEgZAYUIGX1JVg0FobRLwdOxggpmf2RImtZlWJuVHYEA7cAcAEwHAEAKAHCzXECjaAH0AgDsDQCQfTWAyocARQIANDsRoB8A4LBpgHEAAK4AAErrC2QLAPB9V0CoUQOSAgCQBQCMCAhwNAAA8pkAHgMA4J4fYKBIAKIAAL8DAKwvBtAZgAAAAAAAAAAAAAAA+A8A4D8AAAAA/gMA+A8A4D8AAAAAAAAAAAAAAP8DAAD/AQAACg=="
+        }
+    ]
+}
