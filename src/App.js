@@ -9,7 +9,7 @@ import {
   Stats,
 } from "@react-three/drei";
 
-import Lora from "./Lora";
+import Model from "./Model";
 
 import OnCard from "./OnCard";
 import Oscillator from "./Oscillator";
@@ -112,7 +112,7 @@ function App() {
           <Oscillator speed={0.2} amplitude={[0.05, 0.04, 0.02]}>
             <Card ready={ready} />
           </Oscillator>
-          <Lora ready={ready} scale={15} rotation={[0, -Math.PI / 2, 0]} />
+          <Model ready={ready} scale={15} rotation={[0, -Math.PI / 2, 0]} />
           <Intro ready={ready} setReady={setReady} />
           <Stats showPanel={0} className="stats" />
         </Suspense>

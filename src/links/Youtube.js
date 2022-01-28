@@ -20,7 +20,7 @@ export default function Model({ ...props }) {
   };
 
   const group = useRef();
-  const { nodes, materials } = useGLTF("/youtube.gltf");
+  const { nodes, materials } = useGLTF("models/links/youtube.gltf");
   return (
     <mesh
       ref={group}

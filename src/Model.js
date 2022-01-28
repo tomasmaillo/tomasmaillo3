@@ -9,7 +9,7 @@ import { useFrame } from "@react-three/fiber";
 
 export default function Model({ ready, ...props }) {
   const group = useRef();
-  const { nodes, materials } = useGLTF("./model.gltf");
+  const { nodes, materials } = useGLTF("models/model.gltf");
   materials.wireframe = true;
 
   useEffect(() => {
