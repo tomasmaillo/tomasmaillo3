@@ -7,12 +7,37 @@ import {
   useProgress,
   OrbitControls,
   Stats,
+  Text,
+  Plane,
 } from "@react-three/drei";
-
-import Model from "./Model";
 
 import OnCard from "./OnCard";
 import Oscillator from "./Oscillator";
+
+function VideoText(props) {
+  const { ready } = props;
+  const [video] = useState(() =>
+    Object.assign(document.createElement("video"), {
+      src: "/drei.mp4",
+      crossOrigin: "Anonymous",
+      loop: true,
+      muted: true,
+    })
+  );
+  useEffect(() => void (ready && video.play()), [video, ready]);
+
+  return (
+    <Plane args={[15, 10]} {...props}>
+      <meshBasicMaterial toneMapped={false}>
+        <videoTexture
+          attach="map"
+          args={[video]}
+          encoding={THREE.sRGBEncoding}
+        />
+      </meshBasicMaterial>
+    </Plane>
+  );
+}
 
 function Card({ ready }) {
   const cardSize = [2 * 1.56, 2, 0.1];
@@ -98,21 +123,12 @@ function App() {
         camera={{ position: [Math.random() * 5 - 0.25, 10, 20] }}
         ready={ready}
       >
-        <group rotation={[0, 0, Math.PI / 4]}>
-          <mesh position={[0, 0, -9]} material-color="#55aacc">
-            <planeGeometry args={[1000, 0.5]} />
-          </mesh>
-          <mesh position={[0, 5, -9]} material-color="#55aacc">
-            <planeGeometry args={[1000, 0.5]} />
-          </mesh>
-        </group>
-
         <fog attach="fog" args={["rgb(250,0,0)", 8, 20]} />
         <Suspense fallback={null}>
+          <VideoText ready={ready} position={[0, 0, -3]} />
           <Oscillator speed={0.2} amplitude={[0.05, 0.04, 0.02]}>
             <Card ready={ready} />
           </Oscillator>
-          <Model ready={ready} scale={15} rotation={[0, -Math.PI / 2, 0]} />
           <Intro ready={ready} setReady={setReady} />
           <Stats showPanel={0} className="stats" />
         </Suspense>
