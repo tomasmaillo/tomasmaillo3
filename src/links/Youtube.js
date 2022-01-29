@@ -11,7 +11,7 @@ export default function Model({ ...props }) {
     roughness: 0,
     clearcoat: 3,
     clearcoatRoughness: 0,
-    transmission: 0.7,
+    transmission: 1,
     ior: 1.5,
     envMapIntensity: 0,
     color: "#bb1111",
