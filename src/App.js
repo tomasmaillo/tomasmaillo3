@@ -14,20 +14,21 @@ import {
 import OnCard from "./OnCard";
 import Oscillator from "./Oscillator";
 
-function VideoText(props) {
+function VideoPanel(props) {
   const { ready } = props;
-  const [video] = useState(() =>
-    Object.assign(document.createElement("video"), {
-      src: "/drei.mp4",
-      crossOrigin: "Anonymous",
-      loop: true,
-      muted: true,
-    })
-  );
+  const [video] = useState(() => document.getElementById("video"));
+
   useEffect(() => void (ready && video.play()), [video, ready]);
 
+  // Needed for iPhone
+  const isiOS = /iPhone/.test(navigator.platform); // navigator.platform is being deprecated
+  useFrame(() => {
+    if (!isiOS) return;
+    video.currentTime += 1 / 60;
+  });
+
   return (
-    <Plane args={[15, 10]} {...props}>
+    <Plane args={[23, 15]} {...props}>
       <meshBasicMaterial toneMapped={false}>
         <videoTexture
           attach="map"
@@ -125,7 +126,7 @@ function App() {
       >
         <fog attach="fog" args={["rgb(250,0,0)", 8, 20]} />
         <Suspense fallback={null}>
-          <VideoText ready={ready} position={[0, 0, -3]} />
+          <VideoPanel ready={ready} position={[0, 0, -5]} />
           <Oscillator speed={0.2} amplitude={[0.05, 0.04, 0.02]}>
             <Card ready={ready} />
           </Oscillator>
