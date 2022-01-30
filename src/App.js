@@ -6,8 +6,6 @@ import {
   RoundedBox,
   useProgress,
   OrbitControls,
-  Stats,
-  Text,
   Plane,
 } from "@react-three/drei";
 
@@ -119,19 +117,14 @@ function App() {
 
   return (
     <>
-      <Canvas
-        dpr={[1, 2]}
-        camera={{ position: [Math.random() * 5 - 0.25, 10, 20] }}
-        ready={ready}
-      >
-        <fog attach="fog" args={["rgb(250,0,0)", 8, 20]} />
+      <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 5] }} ready={ready}>
+        <fog attach="fog" args={["#000000", 8, 20]} />
         <Suspense fallback={null}>
-          <VideoPanel ready={ready} position={[0, 0, -5]} />
+          <VideoPanel ready={ready} position={[0, 0, -4]} />
           <Oscillator speed={0.2} amplitude={[0.05, 0.04, 0.02]}>
             <Card ready={ready} />
           </Oscillator>
           <Intro ready={ready} setReady={setReady} />
-          <Stats showPanel={0} className="stats" />
         </Suspense>
       </Canvas>
       <Loader dataInterpolation={(p) => `${p.toFixed(2)}%`} />
