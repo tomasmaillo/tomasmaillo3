@@ -6,19 +6,6 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export default function Model({ ...props }) {
-  const materialProps = {
-    thickness: 5,
-    roughness: 0,
-    clearcoat: 3,
-    clearcoatRoughness: 0,
-    transmission: 1,
-    ior: 1.5,
-    envMapIntensity: 0,
-    color: "#1DA1F2",
-    attenuationDistance: 0,
-    normalScale: 0.5,
-  };
-
   const group = useRef();
   const { nodes, materials } = useGLTF("models/links/twitter.gltf");
   return (
@@ -31,7 +18,7 @@ export default function Model({ ...props }) {
       geometry={nodes.Plane.geometry}
       material={nodes.Plane.material}
     >
-      <meshPhysicalMaterial {...materialProps} />
+      <meshBasicMaterial color={"#1DA1F2"} />
     </mesh>
   );
 }

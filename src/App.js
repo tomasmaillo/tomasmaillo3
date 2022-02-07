@@ -8,6 +8,13 @@ import {
   OrbitControls,
   Plane,
 } from "@react-three/drei";
+import {
+  EffectComposer,
+  DepthOfField,
+  Bloom,
+  Noise,
+  Vignette,
+} from "@react-three/postprocessing";
 
 import OnCard from "./OnCard";
 import Oscillator from "./Oscillator";
@@ -126,6 +133,17 @@ function App() {
           </Oscillator>
           <Intro ready={ready} setReady={setReady} />
         </Suspense>
+        <EffectComposer>
+          <DepthOfField
+            focusDistance={0}
+            focalLength={0.02}
+            bokehScale={2}
+            height={480}
+          />
+          <Bloom luminanceThreshold={0} luminanceSmoothing={2} height={300} />
+          <Noise opacity={0.1} />
+          <Vignette eskil={false} offset={0.1} darkness={0.7} />
+        </EffectComposer>
       </Canvas>
       <Loader dataInterpolation={(p) => `${p.toFixed(2)}%`} />
     </>

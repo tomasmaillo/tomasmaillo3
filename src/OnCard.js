@@ -53,7 +53,7 @@ function OnCard({ cardSize, ready }) {
 
   return (
     <>
-      <group position={[0, -0.6, 0.07]}>
+      <group position={[0, -0.6, 0.2]}>
         <Links ready={ready} />
       </group>
 
